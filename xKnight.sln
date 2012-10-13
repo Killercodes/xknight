@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xKnight", "xKnight\xKnight.csproj", "{A109074D-939B-4428-904E-B5E593274EF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xKnight.FormExtracting", "xKnight.FormExtractor\xKnight.FormExtracting.csproj", "{7F8B843D-5D1F-44CB-A191-1548DBD29CD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xKnight.Attacking", "xKnight.Attacker\xKnight.Attacking.csproj", "{53ADCBCF-B328-4040-9914-F56013299AA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xKnight.Reporting", "xKnight.Reporter\xKnight.Reporting.csproj", "{515929F5-8A88-47E7-A543-F0A3FA8B0E0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xKnight.Analyzing", "xKnight.Analyzer\xKnight.Analyzing.csproj", "{6DD18B4D-243B-4A68-978E-622E1E53D968}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xKnight.WebCrawling", "xKnight.WebCrawler\xKnight.WebCrawling.csproj", "{6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xKnight.Models", "xKnight.Models\xKnight.Models.csproj", "{4E5C84E0-754A-4BE7-B994-0E5A85BF6B26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A109074D-939B-4428-904E-B5E593274EF2}.Debug|x86.ActiveCfg = Debug|x86
+		{A109074D-939B-4428-904E-B5E593274EF2}.Debug|x86.Build.0 = Debug|x86
+		{A109074D-939B-4428-904E-B5E593274EF2}.Release|x86.ActiveCfg = Release|x86
+		{A109074D-939B-4428-904E-B5E593274EF2}.Release|x86.Build.0 = Release|x86
+		{7F8B843D-5D1F-44CB-A191-1548DBD29CD2}.Debug|x86.ActiveCfg = Debug|x86
+		{7F8B843D-5D1F-44CB-A191-1548DBD29CD2}.Debug|x86.Build.0 = Debug|x86
+		{7F8B843D-5D1F-44CB-A191-1548DBD29CD2}.Release|x86.ActiveCfg = Release|x86
+		{7F8B843D-5D1F-44CB-A191-1548DBD29CD2}.Release|x86.Build.0 = Release|x86
+		{53ADCBCF-B328-4040-9914-F56013299AA0}.Debug|x86.ActiveCfg = Debug|x86
+		{53ADCBCF-B328-4040-9914-F56013299AA0}.Debug|x86.Build.0 = Debug|x86
+		{53ADCBCF-B328-4040-9914-F56013299AA0}.Release|x86.ActiveCfg = Release|x86
+		{53ADCBCF-B328-4040-9914-F56013299AA0}.Release|x86.Build.0 = Release|x86
+		{515929F5-8A88-47E7-A543-F0A3FA8B0E0A}.Debug|x86.ActiveCfg = Debug|x86
+		{515929F5-8A88-47E7-A543-F0A3FA8B0E0A}.Debug|x86.Build.0 = Debug|x86
+		{515929F5-8A88-47E7-A543-F0A3FA8B0E0A}.Release|x86.ActiveCfg = Release|x86
+		{515929F5-8A88-47E7-A543-F0A3FA8B0E0A}.Release|x86.Build.0 = Release|x86
+		{6DD18B4D-243B-4A68-978E-622E1E53D968}.Debug|x86.ActiveCfg = Debug|x86
+		{6DD18B4D-243B-4A68-978E-622E1E53D968}.Debug|x86.Build.0 = Debug|x86
+		{6DD18B4D-243B-4A68-978E-622E1E53D968}.Release|x86.ActiveCfg = Release|x86
+		{6DD18B4D-243B-4A68-978E-622E1E53D968}.Release|x86.Build.0 = Release|x86
+		{6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF}.Debug|x86.ActiveCfg = Debug|x86
+		{6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF}.Debug|x86.Build.0 = Debug|x86
+		{6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF}.Release|x86.ActiveCfg = Release|x86
+		{6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF}.Release|x86.Build.0 = Release|x86
+		{4E5C84E0-754A-4BE7-B994-0E5A85BF6B26}.Debug|x86.ActiveCfg = Debug|x86
+		{4E5C84E0-754A-4BE7-B994-0E5A85BF6B26}.Debug|x86.Build.0 = Debug|x86
+		{4E5C84E0-754A-4BE7-B994-0E5A85BF6B26}.Release|x86.ActiveCfg = Release|x86
+		{4E5C84E0-754A-4BE7-B994-0E5A85BF6B26}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

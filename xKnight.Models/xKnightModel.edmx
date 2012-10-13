@@ -1,0 +1,582 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="xKnightModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="xKnightModelStoreContainer">
+    <EntitySet Name="Attacks" EntityType="xKnightModel.Store.Attacks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CrawlSettings" EntityType="xKnightModel.Store.CrawlSettings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Forms" EntityType="xKnightModel.Store.Forms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Hosts" EntityType="xKnightModel.Store.Hosts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HostPages" EntityType="xKnightModel.Store.HostPages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="xKnightModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="XAttacks" EntityType="xKnightModel.Store.XAttacks" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_XAttack_Attack" Association="xKnightModel.Store.FK_XAttack_Attack">
+      <End Role="Attack" EntitySet="Attacks" />
+      <End Role="XAttack" EntitySet="XAttacks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Host_CrawlSetting" Association="xKnightModel.Store.FK_Host_CrawlSetting">
+      <End Role="CrawlSetting" EntitySet="CrawlSettings" />
+      <End Role="Host" EntitySet="Hosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Form_HostPage" Association="xKnightModel.Store.FK_Form_HostPage">
+      <End Role="HostPage" EntitySet="HostPages" />
+      <End Role="Form" EntitySet="Forms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_XAttack_Form" Association="xKnightModel.Store.FK_XAttack_Form">
+      <End Role="Form" EntitySet="Forms" />
+      <End Role="XAttack" EntitySet="XAttacks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HostPage_Host" Association="xKnightModel.Store.FK_HostPage_Host">
+      <End Role="Host" EntitySet="Hosts" />
+      <End Role="HostPage" EntitySet="HostPages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HostPage_HostPage" Association="xKnightModel.Store.FK_HostPage_HostPage">
+      <End Role="HostPage" EntitySet="HostPages" />
+      <End Role="HostPage1" EntitySet="HostPages" />
+    </AssociationSet>
+    <AssociationSet Name="AttackHost" Association="xKnightModel.Store.AttackHost">
+      <End Role="Attack" EntitySet="Attacks" />
+      <End Role="Host" EntitySet="Hosts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Attacks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AttackType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StartTime" Type="nchar" Nullable="true" MaxLength="10" />
+    <Property Name="FinishTime" Type="nchar" Nullable="true" MaxLength="10" />
+    <Property Name="Succeed" Type="bit" Nullable="false" />
+    <Property Name="HostId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CrawlSettings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaxPages" Type="int" Nullable="true" />
+    <Property Name="MaxDepth" Type="int" Nullable="true" />
+    <Property Name="MaxTime" Type="bigint" Nullable="true" />
+    <Property Name="MaxByte" Type="bigint" Nullable="true" />
+    <Property Name="StartTime" Type="datetime" Nullable="true" />
+    <Property Name="FinishTime" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Forms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PageId" Type="int" Nullable="false" />
+    <Property Name="FormContents" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Action" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Method" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Hosts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CrawlId" Type="int" Nullable="false" />
+    <Property Name="HostName" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Port" Type="int" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="LastVisit" Type="datetime" Nullable="true" />
+    <Property Name="IndexedPages" Type="int" Nullable="false" />
+    <Property Name="Time" Type="bigint" Nullable="false" />
+    <Property Name="BytesDownloaded" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HostPages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HostId" Type="int" Nullable="false" />
+    <Property Name="Url" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Html" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Depth" Type="int" Nullable="false" />
+    <Property Name="DateTime" Type="datetime" Nullable="false" />
+    <Property Name="RefererId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" Nullable="true" />
+    <Property Name="definition" Type="varbinary(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="XAttacks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="AttackId" Type="int" Nullable="false" />
+    <Property Name="FormId" Type="int" Nullable="false" />
+    <Property Name="AttackContent" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ResponsePage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="xAttackType" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_XAttack_Attack">
+    <End Role="Attack" Type="xKnightModel.Store.Attacks" Multiplicity="1" />
+    <End Role="XAttack" Type="xKnightModel.Store.XAttacks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Attack">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="XAttack">
+        <PropertyRef Name="AttackId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Host_CrawlSetting">
+    <End Role="CrawlSetting" Type="xKnightModel.Store.CrawlSettings" Multiplicity="1" />
+    <End Role="Host" Type="xKnightModel.Store.Hosts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CrawlSetting">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Host">
+        <PropertyRef Name="CrawlId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Form_HostPage">
+    <End Role="HostPage" Type="xKnightModel.Store.HostPages" Multiplicity="1" />
+    <End Role="Form" Type="xKnightModel.Store.Forms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HostPage">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Form">
+        <PropertyRef Name="PageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_XAttack_Form">
+    <End Role="Form" Type="xKnightModel.Store.Forms" Multiplicity="1" />
+    <End Role="XAttack" Type="xKnightModel.Store.XAttacks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Form">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="XAttack">
+        <PropertyRef Name="FormId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HostPage_Host">
+    <End Role="Host" Type="xKnightModel.Store.Hosts" Multiplicity="1" />
+    <End Role="HostPage" Type="xKnightModel.Store.HostPages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HostPage">
+        <PropertyRef Name="HostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HostPage_HostPage">
+    <End Role="HostPage" Type="xKnightModel.Store.HostPages" Multiplicity="0..1" />
+    <End Role="HostPage1" Type="xKnightModel.Store.HostPages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HostPage">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HostPage1">
+        <PropertyRef Name="RefererId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AttackHost">
+    <End Role="Attack" Type="xKnightModel.Store.Attacks" Multiplicity="*" />
+    <End Role="Host" Type="xKnightModel.Store.Hosts" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Attack">
+        <PropertyRef Name="HostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="xKnightModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="xKnightEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Attacks" EntityType="xKnightModel.Attack" />
+          <EntitySet Name="CrawlSettings" EntityType="xKnightModel.CrawlSetting" />
+          <EntitySet Name="Forms" EntityType="xKnightModel.Form" />
+          <EntitySet Name="Hosts" EntityType="xKnightModel.Host" />
+          <EntitySet Name="HostPages" EntityType="xKnightModel.HostPage" />
+          <EntitySet Name="sysdiagrams" EntityType="xKnightModel.sysdiagram" />
+          <EntitySet Name="XAttacks" EntityType="xKnightModel.XAttack" />
+          <AssociationSet Name="FK_XAttack_Attack" Association="xKnightModel.FK_XAttack_Attack">
+            <End Role="Attack" EntitySet="Attacks" />
+            <End Role="XAttack" EntitySet="XAttacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Host_CrawlSetting" Association="xKnightModel.FK_Host_CrawlSetting">
+            <End Role="CrawlSetting" EntitySet="CrawlSettings" />
+            <End Role="Host" EntitySet="Hosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Form_HostPage" Association="xKnightModel.FK_Form_HostPage">
+            <End Role="HostPage" EntitySet="HostPages" />
+            <End Role="Form" EntitySet="Forms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XAttack_Form" Association="xKnightModel.FK_XAttack_Form">
+            <End Role="Form" EntitySet="Forms" />
+            <End Role="XAttack" EntitySet="XAttacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HostPage_Host" Association="xKnightModel.FK_HostPage_Host">
+            <End Role="Host" EntitySet="Hosts" />
+            <End Role="HostPage" EntitySet="HostPages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HostPage_HostPage" Association="xKnightModel.FK_HostPage_HostPage">
+            <End Role="HostPage" EntitySet="HostPages" />
+            <End Role="HostPage1" EntitySet="HostPages" />
+          </AssociationSet>
+          <AssociationSet Name="AttackHost" Association="xKnightModel.AttackHost">
+            <End Role="Attack" EntitySet="Attacks" />
+            <End Role="Host" EntitySet="Hosts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Attack">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttackType" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="StartTime" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="FinishTime" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="Succeed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="XAttacks" Relationship="xKnightModel.FK_XAttack_Attack" FromRole="Attack" ToRole="XAttack" />
+          <NavigationProperty Name="Host" Relationship="xKnightModel.AttackHost" FromRole="Attack" ToRole="Host" />
+          <Property Type="Int32" Name="HostId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrawlSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaxPages" Type="Int32" />
+          <Property Name="MaxDepth" Type="Int32" />
+          <Property Name="MaxTime" Type="Int64" />
+          <Property Name="MaxByte" Type="Int64" />
+          <Property Name="StartTime" Type="DateTime" />
+          <Property Name="FinishTime" Type="DateTime" />
+          <NavigationProperty Name="Hosts" Relationship="xKnightModel.FK_Host_CrawlSetting" FromRole="CrawlSetting" ToRole="Host" />
+        </EntityType>
+        <EntityType Name="Form">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageId" Type="Int32" Nullable="false" />
+          <Property Name="FormContents" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Action" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Method" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="HostPage" Relationship="xKnightModel.FK_Form_HostPage" FromRole="Form" ToRole="HostPage" />
+          <NavigationProperty Name="XAttacks" Relationship="xKnightModel.FK_XAttack_Form" FromRole="Form" ToRole="XAttack" />
+        </EntityType>
+        <EntityType Name="Host">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CrawlId" Type="Int32" Nullable="false" />
+          <Property Name="HostName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Port" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="LastVisit" Type="DateTime" />
+          <Property Name="IndexedPages" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="Int64" Nullable="false" />
+          <Property Name="BytesDownloaded" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CrawlSetting" Relationship="xKnightModel.FK_Host_CrawlSetting" FromRole="Host" ToRole="CrawlSetting" />
+          <NavigationProperty Name="HostPages" Relationship="xKnightModel.FK_HostPage_Host" FromRole="Host" ToRole="HostPage" />
+          <NavigationProperty Name="Attacks" Relationship="xKnightModel.AttackHost" FromRole="Host" ToRole="Attack" />
+        </EntityType>
+        <EntityType Name="HostPage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HostId" Type="Int32" Nullable="false" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Html" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Depth" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+          <Property Name="RefererId" Type="Int32" />
+          <NavigationProperty Name="Forms" Relationship="xKnightModel.FK_Form_HostPage" FromRole="HostPage" ToRole="Form" />
+          <NavigationProperty Name="Host" Relationship="xKnightModel.FK_HostPage_Host" FromRole="HostPage" ToRole="Host" />
+          <NavigationProperty Name="HostPage1" Relationship="xKnightModel.FK_HostPage_HostPage" FromRole="HostPage" ToRole="HostPage1" />
+          <NavigationProperty Name="HostPage2" Relationship="xKnightModel.FK_HostPage_HostPage" FromRole="HostPage1" ToRole="HostPage" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="XAttack">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="AttackId" Type="Int32" Nullable="false" />
+          <Property Name="FormId" Type="Int32" Nullable="false" />
+          <Property Name="AttackContent" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ResponsePage" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="xAttackType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Attack" Relationship="xKnightModel.FK_XAttack_Attack" FromRole="XAttack" ToRole="Attack" />
+          <NavigationProperty Name="Form" Relationship="xKnightModel.FK_XAttack_Form" FromRole="XAttack" ToRole="Form" />
+        </EntityType>
+        <Association Name="FK_XAttack_Attack">
+          <End Role="Attack" Type="xKnightModel.Attack" Multiplicity="1" />
+          <End Role="XAttack" Type="xKnightModel.XAttack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attack">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XAttack">
+              <PropertyRef Name="AttackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Host_CrawlSetting">
+          <End Role="CrawlSetting" Type="xKnightModel.CrawlSetting" Multiplicity="1" />
+          <End Role="Host" Type="xKnightModel.Host" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CrawlSetting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Host">
+              <PropertyRef Name="CrawlId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Form_HostPage">
+          <End Role="HostPage" Type="xKnightModel.HostPage" Multiplicity="1" />
+          <End Role="Form" Type="xKnightModel.Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HostPage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Form">
+              <PropertyRef Name="PageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XAttack_Form">
+          <End Role="Form" Type="xKnightModel.Form" Multiplicity="1" />
+          <End Role="XAttack" Type="xKnightModel.XAttack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XAttack">
+              <PropertyRef Name="FormId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HostPage_Host">
+          <End Role="Host" Type="xKnightModel.Host" Multiplicity="1" />
+          <End Role="HostPage" Type="xKnightModel.HostPage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Host">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HostPage">
+              <PropertyRef Name="HostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HostPage_HostPage">
+          <End Role="HostPage" Type="xKnightModel.HostPage" Multiplicity="0..1" />
+          <End Role="HostPage1" Type="xKnightModel.HostPage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HostPage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HostPage1">
+              <PropertyRef Name="RefererId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AttackHost">
+          <End Type="xKnightModel.Attack" Role="Attack" Multiplicity="*" />
+          <End Type="xKnightModel.Host" Role="Host" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Host">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attack">
+              <PropertyRef Name="HostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="xKnightModelStoreContainer" CdmEntityContainer="xKnightEntities">
+    <EntitySetMapping Name="Attacks">
+      <EntityTypeMapping TypeName="IsTypeOf(xKnightModel.Attack)">
+        <MappingFragment StoreEntitySet="Attacks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AttackType" ColumnName="AttackType" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="FinishTime" ColumnName="FinishTime" />
+          <ScalarProperty Name="Succeed" ColumnName="Succeed" />
+          <ScalarProperty Name="HostId" ColumnName="HostId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CrawlSettings">
+      <EntityTypeMapping TypeName="IsTypeOf(xKnightModel.CrawlSetting)">
+        <MappingFragment StoreEntitySet="CrawlSettings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MaxPages" ColumnName="MaxPages" />
+          <ScalarProperty Name="MaxDepth" ColumnName="MaxDepth" />
+          <ScalarProperty Name="MaxTime" ColumnName="MaxTime" />
+          <ScalarProperty Name="MaxByte" ColumnName="MaxByte" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="FinishTime" ColumnName="FinishTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Forms">
+      <EntityTypeMapping TypeName="IsTypeOf(xKnightModel.Form)">
+        <MappingFragment StoreEntitySet="Forms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PageId" ColumnName="PageId" />
+          <ScalarProperty Name="FormContents" ColumnName="FormContents" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="Method" ColumnName="Method" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hosts">
+      <EntityTypeMapping TypeName="IsTypeOf(xKnightModel.Host)">
+        <MappingFragment StoreEntitySet="Hosts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CrawlId" ColumnName="CrawlId" />
+          <ScalarProperty Name="HostName" ColumnName="HostName" />
+          <ScalarProperty Name="Port" ColumnName="Port" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LastVisit" ColumnName="LastVisit" />
+          <ScalarProperty Name="IndexedPages" ColumnName="IndexedPages" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="BytesDownloaded" ColumnName="BytesDownloaded" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HostPages">
+      <EntityTypeMapping TypeName="IsTypeOf(xKnightModel.HostPage)">
+        <MappingFragment StoreEntitySet="HostPages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="HostId" ColumnName="HostId" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Html" ColumnName="Html" />
+          <ScalarProperty Name="Depth" ColumnName="Depth" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          <ScalarProperty Name="RefererId" ColumnName="RefererId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="IsTypeOf(xKnightModel.sysdiagram)">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="XAttacks">
+      <EntityTypeMapping TypeName="IsTypeOf(xKnightModel.XAttack)">
+        <MappingFragment StoreEntitySet="XAttacks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AttackId" ColumnName="AttackId" />
+          <ScalarProperty Name="FormId" ColumnName="FormId" />
+          <ScalarProperty Name="AttackContent" ColumnName="AttackContent" />
+          <ScalarProperty Name="ResponsePage" ColumnName="ResponsePage" />
+          <ScalarProperty Name="xAttackType" ColumnName="xAttackType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1">
+        <EntityTypeShape EntityType="xKnightModel.Attack" Width="1.5" PointX="7.5" PointY="1.125" Height="2.3648893229166661" IsExpanded="true" />
+        <EntityTypeShape EntityType="xKnightModel.CrawlSetting" Width="1.5" PointX="0.75" PointY="2.625" Height="2.5571907552083331" IsExpanded="true" />
+        <EntityTypeShape EntityType="xKnightModel.Form" Width="1.5" PointX="7.5" PointY="4.375" Height="2.3648893229166656" IsExpanded="true" />
+        <EntityTypeShape EntityType="xKnightModel.Host" Width="1.5" PointX="3" PointY="2.375" Height="3.1340950520833335" IsExpanded="true" />
+        <EntityTypeShape EntityType="xKnightModel.HostPage" Width="1.5" PointX="5.25" PointY="2.25" Height="3.3263964843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="xKnightModel.sysdiagram" Width="1.5" PointX="0.75" PointY="6.75" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="xKnightModel.XAttack" Width="1.5" PointX="9.75" PointY="2.625" Height="2.5571907552083317" IsExpanded="true" />
+        <AssociationConnector Association="xKnightModel.FK_XAttack_Attack" ManuallyRouted="false">
+          <ConnectorPoint PointX="9" PointY="3.0574446614583328" />
+          <ConnectorPoint PointX="9.75" PointY="3.0574446614583328" />
+        </AssociationConnector>
+        <AssociationConnector Association="xKnightModel.FK_Host_CrawlSetting" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="3.9035953776041667" />
+          <ConnectorPoint PointX="3" PointY="3.9035953776041667" />
+        </AssociationConnector>
+        <AssociationConnector Association="xKnightModel.FK_Form_HostPage" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="4.9756982421875" />
+          <ConnectorPoint PointX="7.5" PointY="4.9756982421875" />
+        </AssociationConnector>
+        <AssociationConnector Association="xKnightModel.FK_XAttack_Form" ManuallyRouted="false">
+          <ConnectorPoint PointX="9" PointY="4.7785953776041659" />
+          <ConnectorPoint PointX="9.75" PointY="4.7785953776041659" />
+        </AssociationConnector>
+        <AssociationConnector Association="xKnightModel.FK_HostPage_Host" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="3.9420475260416667" />
+          <ConnectorPoint PointX="5.25" PointY="3.9420475260416667" />
+        </AssociationConnector>
+        <AssociationConnector Association="xKnightModel.FK_HostPage_HostPage" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.7819230769230767" PointY="5.576396484375" />
+          <ConnectorPoint PointX="5.7819230769230767" PointY="5.826396484375" />
+          <ConnectorPoint PointX="6.2284615384615378" PointY="5.826396484375" />
+          <ConnectorPoint PointX="6.2284615384615378" PointY="5.576396484375" />
+        </AssociationConnector>
+        <AssociationConnector Association="xKnightModel.AttackHost">
+          <ConnectorPoint PointX="7.5" PointY="1.65625" />
+          <ConnectorPoint PointX="3.75" PointY="1.65625" />
+          <ConnectorPoint PointX="3.75" PointY="2.375" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

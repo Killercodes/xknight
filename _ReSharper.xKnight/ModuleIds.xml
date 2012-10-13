@@ -1,0 +1,11 @@
+<Modules>
+  <Module PersistentId="A109074D-939B-4428-904E-B5E593274EF2" ModuleId="xKnight" />
+  <Module PersistentId="B559B105-BD34-4317-9738-A31F31792893" ModuleId="WebCrawler" />
+  <Module PersistentId="A01B9CC6-A27B-4C0D-962F-66132040370B" ModuleId="FormExtractor" />
+  <Module PersistentId="7F8B843D-5D1F-44CB-A191-1548DBD29CD2" ModuleId="xKnight.FormExtractor" />
+  <Module PersistentId="53ADCBCF-B328-4040-9914-F56013299AA0" ModuleId="xKnight.Attacker" />
+  <Module PersistentId="515929F5-8A88-47E7-A543-F0A3FA8B0E0A" ModuleId="xKnight.Reporter" />
+  <Module PersistentId="6DD18B4D-243B-4A68-978E-622E1E53D968" ModuleId="xKnight.Analyzer" />
+  <Module PersistentId="6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF" ModuleId="xKnight.WebCrawler" />
+  <Module PersistentId="4E5C84E0-754A-4BE7-B994-0E5A85BF6B26" ModuleId="xKnight.Models" />
+</Modules>
