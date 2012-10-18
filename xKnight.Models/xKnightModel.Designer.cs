@@ -8,23 +8,27 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("xKnightModel", "FK_XAttack_Attack", "Attack", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.Attack), "XAttack", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.XAttack), true)]
 [assembly: EdmRelationshipAttribute("xKnightModel", "FK_Host_CrawlSetting", "CrawlSetting", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.CrawlSetting), "Host", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.Host), true)]
-[assembly: EdmRelationshipAttribute("xKnightModel", "FK_Form_HostPage", "HostPage", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.HostPage), "Form", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.Form), true)]
+[assembly: EdmRelationshipAttribute("xKnightModel", "FK_Form_HostPage", "HostPage", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.Webpage), "Form", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.Form), true)]
 [assembly: EdmRelationshipAttribute("xKnightModel", "FK_XAttack_Form", "Form", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.Form), "XAttack", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.XAttack), true)]
-[assembly: EdmRelationshipAttribute("xKnightModel", "FK_HostPage_Host", "Host", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.Host), "HostPage", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.HostPage), true)]
-[assembly: EdmRelationshipAttribute("xKnightModel", "FK_HostPage_HostPage", "HostPage", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(xKnight.Models.HostPage), "HostPage1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.HostPage), true)]
-[assembly: EdmRelationshipAttribute("xKnightModel", "AttackHost", "Attack", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.Attack), "Host", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.Host), true)]
+[assembly: EdmRelationshipAttribute("xKnightModel", "FK_HostPage_Host", "Host", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.Host), "HostPage", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.Webpage), true)]
+[assembly: EdmRelationshipAttribute("xKnightModel", "FK_HostPage_HostPage", "HostPage", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(xKnight.Models.Webpage), "HostPage1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.Webpage), true)]
+[assembly: EdmRelationshipAttribute("xKnightModel", "FormElementForm", "FormElement", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.FormElement), "Form", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.Form), true)]
+[assembly: EdmRelationshipAttribute("xKnightModel", "AttackCrawlSetting", "Attack", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.Attack), "CrawlSetting", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.CrawlSetting), true)]
+[assembly: EdmRelationshipAttribute("xKnightModel", "XAttackParamFormElement", "XAttackParam", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.XAttackParam), "FormElement", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.FormElement), true)]
+[assembly: EdmRelationshipAttribute("xKnightModel", "XAttackParamXAttack", "XAttackParam", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(xKnight.Models.XAttackParam), "XAttack", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(xKnight.Models.XAttack), true)]
 
 #endregion
 
@@ -143,18 +147,18 @@ namespace xKnight.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<HostPage> HostPages
+        public ObjectSet<Webpage> Webpages
         {
             get
             {
-                if ((_HostPages == null))
+                if ((_Webpages == null))
                 {
-                    _HostPages = base.CreateObjectSet<HostPage>("HostPages");
+                    _Webpages = base.CreateObjectSet<Webpage>("Webpages");
                 }
-                return _HostPages;
+                return _Webpages;
             }
         }
-        private ObjectSet<HostPage> _HostPages;
+        private ObjectSet<Webpage> _Webpages;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -187,8 +191,41 @@ namespace xKnight.Models
             }
         }
         private ObjectSet<XAttack> _XAttacks;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FormElement> FormElements
+        {
+            get
+            {
+                if ((_FormElements == null))
+                {
+                    _FormElements = base.CreateObjectSet<FormElement>("FormElements");
+                }
+                return _FormElements;
+            }
+        }
+        private ObjectSet<FormElement> _FormElements;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<XAttackParam> XAttackParams
+        {
+            get
+            {
+                if ((_XAttackParams == null))
+                {
+                    _XAttackParams = base.CreateObjectSet<XAttackParam>("XAttackParams");
+                }
+                return _XAttackParams;
+            }
+        }
+        private ObjectSet<XAttackParam> _XAttackParams;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -224,11 +261,11 @@ namespace xKnight.Models
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the HostPages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Webpages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToHostPages(HostPage hostPage)
+        public void AddToWebpages(Webpage webpage)
         {
-            base.AddObject("HostPages", hostPage);
+            base.AddObject("Webpages", webpage);
         }
     
         /// <summary>
@@ -246,13 +283,29 @@ namespace xKnight.Models
         {
             base.AddObject("XAttacks", xAttack);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FormElements EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFormElements(FormElement formElement)
+        {
+            base.AddObject("FormElements", formElement);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the XAttackParams EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToXAttackParams(XAttackParam xAttackParam)
+        {
+            base.AddObject("XAttackParams", xAttackParam);
+        }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -270,19 +323,20 @@ namespace xKnight.Models
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="attackType">Initial value of the AttackType property.</param>
-        /// <param name="succeed">Initial value of the Succeed property.</param>
         /// <param name="hostId">Initial value of the HostId property.</param>
-        public static Attack CreateAttack(global::System.Int32 id, global::System.String attackType, global::System.Boolean succeed, global::System.Int32 hostId)
+        /// <param name="crawlSettingId">Initial value of the CrawlSettingId property.</param>
+        public static Attack CreateAttack(global::System.Int32 id, global::System.Int32 attackType, global::System.Int32 hostId, global::System.Int32 crawlSettingId)
         {
             Attack attack = new Attack();
             attack.Id = id;
             attack.AttackType = attackType;
-            attack.Succeed = succeed;
             attack.HostId = hostId;
+            attack.CrawlSettingId = crawlSettingId;
             return attack;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -317,7 +371,7 @@ namespace xKnight.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String AttackType
+        public global::System.Int32 AttackType
         {
             get
             {
@@ -327,13 +381,13 @@ namespace xKnight.Models
             {
                 OnAttackTypeChanging(value);
                 ReportPropertyChanging("AttackType");
-                _AttackType = StructuralObject.SetValidValue(value, false);
+                _AttackType = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("AttackType");
                 OnAttackTypeChanged();
             }
         }
-        private global::System.String _AttackType;
-        partial void OnAttackTypeChanging(global::System.String value);
+        private global::System.Int32 _AttackType;
+        partial void OnAttackTypeChanging(global::System.Int32 value);
         partial void OnAttackTypeChanged();
     
         /// <summary>
@@ -341,7 +395,7 @@ namespace xKnight.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String StartTime
+        public Nullable<global::System.DateTime> StartTime
         {
             get
             {
@@ -351,13 +405,13 @@ namespace xKnight.Models
             {
                 OnStartTimeChanging(value);
                 ReportPropertyChanging("StartTime");
-                _StartTime = StructuralObject.SetValidValue(value, true);
+                _StartTime = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("StartTime");
                 OnStartTimeChanged();
             }
         }
-        private global::System.String _StartTime;
-        partial void OnStartTimeChanging(global::System.String value);
+        private Nullable<global::System.DateTime> _StartTime;
+        partial void OnStartTimeChanging(Nullable<global::System.DateTime> value);
         partial void OnStartTimeChanged();
     
         /// <summary>
@@ -365,7 +419,7 @@ namespace xKnight.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String FinishTime
+        public Nullable<global::System.DateTime> FinishTime
         {
             get
             {
@@ -375,38 +429,14 @@ namespace xKnight.Models
             {
                 OnFinishTimeChanging(value);
                 ReportPropertyChanging("FinishTime");
-                _FinishTime = StructuralObject.SetValidValue(value, true);
+                _FinishTime = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("FinishTime");
                 OnFinishTimeChanged();
             }
         }
-        private global::System.String _FinishTime;
-        partial void OnFinishTimeChanging(global::System.String value);
+        private Nullable<global::System.DateTime> _FinishTime;
+        partial void OnFinishTimeChanging(Nullable<global::System.DateTime> value);
         partial void OnFinishTimeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean Succeed
-        {
-            get
-            {
-                return _Succeed;
-            }
-            set
-            {
-                OnSucceedChanging(value);
-                ReportPropertyChanging("Succeed");
-                _Succeed = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Succeed");
-                OnSucceedChanged();
-            }
-        }
-        private global::System.Boolean _Succeed;
-        partial void OnSucceedChanging(global::System.Boolean value);
-        partial void OnSucceedChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -431,8 +461,33 @@ namespace xKnight.Models
         private global::System.Int32 _HostId;
         partial void OnHostIdChanging(global::System.Int32 value);
         partial void OnHostIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CrawlSettingId
+        {
+            get
+            {
+                return _CrawlSettingId;
+            }
+            set
+            {
+                OnCrawlSettingIdChanging(value);
+                ReportPropertyChanging("CrawlSettingId");
+                _CrawlSettingId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CrawlSettingId");
+                OnCrawlSettingIdChanged();
+            }
+        }
+        private global::System.Int32 _CrawlSettingId;
+        partial void OnCrawlSettingIdChanging(global::System.Int32 value);
+        partial void OnCrawlSettingIdChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -464,16 +519,16 @@ namespace xKnight.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "AttackHost", "Host")]
-        public Host Host
+        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "AttackCrawlSetting", "CrawlSetting")]
+        public CrawlSetting CrawlSetting
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Host>("xKnightModel.AttackHost", "Host").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CrawlSetting>("xKnightModel.AttackCrawlSetting", "CrawlSetting").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Host>("xKnightModel.AttackHost", "Host").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CrawlSetting>("xKnightModel.AttackCrawlSetting", "CrawlSetting").Value = value;
             }
         }
         /// <summary>
@@ -481,22 +536,23 @@ namespace xKnight.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<Host> HostReference
+        public EntityReference<CrawlSetting> CrawlSettingReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Host>("xKnightModel.AttackHost", "Host");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CrawlSetting>("xKnightModel.AttackCrawlSetting", "CrawlSetting");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Host>("xKnightModel.AttackHost", "Host", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<CrawlSetting>("xKnightModel.AttackCrawlSetting", "CrawlSetting", value);
                 }
             }
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -521,6 +577,7 @@ namespace xKnight.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -695,6 +752,7 @@ namespace xKnight.Models
         partial void OnFinishTimeChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -719,8 +777,31 @@ namespace xKnight.Models
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "AttackCrawlSetting", "Attack")]
+        public EntityCollection<Attack> Attacks
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Attack>("xKnightModel.AttackCrawlSetting", "Attack");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Attack>("xKnightModel.AttackCrawlSetting", "Attack", value);
+                }
+            }
+        }
 
         #endregion
+
     }
     
     /// <summary>
@@ -737,22 +818,21 @@ namespace xKnight.Models
         /// Create a new Form object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="pageId">Initial value of the PageId property.</param>
-        /// <param name="formContents">Initial value of the FormContents property.</param>
+        /// <param name="webpageId">Initial value of the WebpageId property.</param>
         /// <param name="action">Initial value of the Action property.</param>
         /// <param name="method">Initial value of the Method property.</param>
-        public static Form CreateForm(global::System.Int32 id, global::System.Int32 pageId, global::System.String formContents, global::System.String action, global::System.String method)
+        public static Form CreateForm(global::System.Int32 id, global::System.Int32 webpageId, global::System.String action, global::System.String method)
         {
             Form form = new Form();
             form.Id = id;
-            form.PageId = pageId;
-            form.FormContents = formContents;
+            form.WebpageId = webpageId;
             form.Action = action;
             form.Method = method;
             return form;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -787,48 +867,24 @@ namespace xKnight.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 PageId
+        public global::System.Int32 WebpageId
         {
             get
             {
-                return _PageId;
+                return _WebpageId;
             }
             set
             {
-                OnPageIdChanging(value);
-                ReportPropertyChanging("PageId");
-                _PageId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PageId");
-                OnPageIdChanged();
+                OnWebpageIdChanging(value);
+                ReportPropertyChanging("WebpageId");
+                _WebpageId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("WebpageId");
+                OnWebpageIdChanged();
             }
         }
-        private global::System.Int32 _PageId;
-        partial void OnPageIdChanging(global::System.Int32 value);
-        partial void OnPageIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String FormContents
-        {
-            get
-            {
-                return _FormContents;
-            }
-            set
-            {
-                OnFormContentsChanging(value);
-                ReportPropertyChanging("FormContents");
-                _FormContents = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("FormContents");
-                OnFormContentsChanged();
-            }
-        }
-        private global::System.String _FormContents;
-        partial void OnFormContentsChanging(global::System.String value);
-        partial void OnFormContentsChanged();
+        private global::System.Int32 _WebpageId;
+        partial void OnWebpageIdChanging(global::System.Int32 value);
+        partial void OnWebpageIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -879,6 +935,7 @@ namespace xKnight.Models
         partial void OnMethodChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -889,15 +946,15 @@ namespace xKnight.Models
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FK_Form_HostPage", "HostPage")]
-        public HostPage HostPage
+        public Webpage Webpage
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<HostPage>("xKnightModel.FK_Form_HostPage", "HostPage").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Webpage>("xKnightModel.FK_Form_HostPage", "HostPage").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<HostPage>("xKnightModel.FK_Form_HostPage", "HostPage").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Webpage>("xKnightModel.FK_Form_HostPage", "HostPage").Value = value;
             }
         }
         /// <summary>
@@ -905,17 +962,17 @@ namespace xKnight.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<HostPage> HostPageReference
+        public EntityReference<Webpage> WebpageReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<HostPage>("xKnightModel.FK_Form_HostPage", "HostPage");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Webpage>("xKnightModel.FK_Form_HostPage", "HostPage");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<HostPage>("xKnightModel.FK_Form_HostPage", "HostPage", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Webpage>("xKnightModel.FK_Form_HostPage", "HostPage", value);
                 }
             }
         }
@@ -941,8 +998,228 @@ namespace xKnight.Models
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FormElementForm", "FormElement")]
+        public EntityCollection<FormElement> FormElements
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<FormElement>("xKnightModel.FormElementForm", "FormElement");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<FormElement>("xKnightModel.FormElementForm", "FormElement", value);
+                }
+            }
+        }
 
         #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="xKnightModel", Name="FormElement")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class FormElement : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FormElement object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="formId">Initial value of the FormId property.</param>
+        public static FormElement CreateFormElement(global::System.Int32 id, global::System.Int32 formId)
+        {
+            FormElement formElement = new FormElement();
+            formElement.Id = id;
+            formElement.FormId = formId;
+            return formElement;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Value
+        {
+            get
+            {
+                return _Value;
+            }
+            set
+            {
+                OnValueChanging(value);
+                ReportPropertyChanging("Value");
+                _Value = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Value");
+                OnValueChanged();
+            }
+        }
+        private global::System.String _Value;
+        partial void OnValueChanging(global::System.String value);
+        partial void OnValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Type
+        {
+            get
+            {
+                return _Type;
+            }
+            set
+            {
+                OnTypeChanging(value);
+                ReportPropertyChanging("Type");
+                _Type = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Type");
+                OnTypeChanged();
+            }
+        }
+        private global::System.String _Type;
+        partial void OnTypeChanging(global::System.String value);
+        partial void OnTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FormId
+        {
+            get
+            {
+                return _FormId;
+            }
+            set
+            {
+                OnFormIdChanging(value);
+                ReportPropertyChanging("FormId");
+                _FormId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FormId");
+                OnFormIdChanged();
+            }
+        }
+        private global::System.Int32 _FormId;
+        partial void OnFormIdChanging(global::System.Int32 value);
+        partial void OnFormIdChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FormElementForm", "Form")]
+        public Form Form
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Form>("xKnightModel.FormElementForm", "Form").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Form>("xKnightModel.FormElementForm", "Form").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Form> FormReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Form>("xKnightModel.FormElementForm", "Form");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Form>("xKnightModel.FormElementForm", "Form", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -961,26 +1238,21 @@ namespace xKnight.Models
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="crawlId">Initial value of the CrawlId property.</param>
         /// <param name="hostName">Initial value of the HostName property.</param>
-        /// <param name="port">Initial value of the Port property.</param>
-        /// <param name="status">Initial value of the Status property.</param>
         /// <param name="indexedPages">Initial value of the IndexedPages property.</param>
-        /// <param name="time">Initial value of the Time property.</param>
         /// <param name="bytesDownloaded">Initial value of the BytesDownloaded property.</param>
-        public static Host CreateHost(global::System.Int32 id, global::System.Int32 crawlId, global::System.String hostName, global::System.Int32 port, global::System.Int32 status, global::System.Int32 indexedPages, global::System.Int64 time, global::System.Int64 bytesDownloaded)
+        public static Host CreateHost(global::System.Int32 id, global::System.Int32 crawlId, global::System.String hostName, global::System.Int32 indexedPages, global::System.Int64 bytesDownloaded)
         {
             Host host = new Host();
             host.Id = id;
             host.CrawlId = crawlId;
             host.HostName = hostName;
-            host.Port = port;
-            host.Status = status;
             host.IndexedPages = indexedPages;
-            host.Time = time;
             host.BytesDownloaded = bytesDownloaded;
             return host;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1063,78 +1335,6 @@ namespace xKnight.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 Port
-        {
-            get
-            {
-                return _Port;
-            }
-            set
-            {
-                OnPortChanging(value);
-                ReportPropertyChanging("Port");
-                _Port = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Port");
-                OnPortChanged();
-            }
-        }
-        private global::System.Int32 _Port;
-        partial void OnPortChanging(global::System.Int32 value);
-        partial void OnPortChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 Status
-        {
-            get
-            {
-                return _Status;
-            }
-            set
-            {
-                OnStatusChanging(value);
-                ReportPropertyChanging("Status");
-                _Status = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Status");
-                OnStatusChanged();
-            }
-        }
-        private global::System.Int32 _Status;
-        partial void OnStatusChanging(global::System.Int32 value);
-        partial void OnStatusChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> LastVisit
-        {
-            get
-            {
-                return _LastVisit;
-            }
-            set
-            {
-                OnLastVisitChanging(value);
-                ReportPropertyChanging("LastVisit");
-                _LastVisit = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastVisit");
-                OnLastVisitChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _LastVisit;
-        partial void OnLastVisitChanging(Nullable<global::System.DateTime> value);
-        partial void OnLastVisitChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.Int32 IndexedPages
         {
             get
@@ -1159,30 +1359,6 @@ namespace xKnight.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int64 Time
-        {
-            get
-            {
-                return _Time;
-            }
-            set
-            {
-                OnTimeChanging(value);
-                ReportPropertyChanging("Time");
-                _Time = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Time");
-                OnTimeChanged();
-            }
-        }
-        private global::System.Int64 _Time;
-        partial void OnTimeChanging(global::System.Int64 value);
-        partial void OnTimeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.Int64 BytesDownloaded
         {
             get
@@ -1201,8 +1377,57 @@ namespace xKnight.Models
         private global::System.Int64 _BytesDownloaded;
         partial void OnBytesDownloadedChanging(global::System.Int64 value);
         partial void OnBytesDownloadedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> StartTime
+        {
+            get
+            {
+                return _StartTime;
+            }
+            set
+            {
+                OnStartTimeChanging(value);
+                ReportPropertyChanging("StartTime");
+                _StartTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("StartTime");
+                OnStartTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _StartTime;
+        partial void OnStartTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnStartTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> FinishTime
+        {
+            get
+            {
+                return _FinishTime;
+            }
+            set
+            {
+                OnFinishTimeChanging(value);
+                ReportPropertyChanging("FinishTime");
+                _FinishTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FinishTime");
+                OnFinishTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _FinishTime;
+        partial void OnFinishTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnFinishTimeChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1251,376 +1476,23 @@ namespace xKnight.Models
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FK_HostPage_Host", "HostPage")]
-        public EntityCollection<HostPage> HostPages
+        public EntityCollection<Webpage> HostPages
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<HostPage>("xKnightModel.FK_HostPage_Host", "HostPage");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Webpage>("xKnightModel.FK_HostPage_Host", "HostPage");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<HostPage>("xKnightModel.FK_HostPage_Host", "HostPage", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "AttackHost", "Attack")]
-        public EntityCollection<Attack> Attacks
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Attack>("xKnightModel.AttackHost", "Attack");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Attack>("xKnightModel.AttackHost", "Attack", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Webpage>("xKnightModel.FK_HostPage_Host", "HostPage", value);
                 }
             }
         }
 
         #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="xKnightModel", Name="HostPage")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class HostPage : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new HostPage object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="hostId">Initial value of the HostId property.</param>
-        /// <param name="url">Initial value of the Url property.</param>
-        /// <param name="html">Initial value of the Html property.</param>
-        /// <param name="depth">Initial value of the Depth property.</param>
-        /// <param name="dateTime">Initial value of the DateTime property.</param>
-        public static HostPage CreateHostPage(global::System.Int32 id, global::System.Int32 hostId, global::System.String url, global::System.String html, global::System.Int32 depth, global::System.DateTime dateTime)
-        {
-            HostPage hostPage = new HostPage();
-            hostPage.Id = id;
-            hostPage.HostId = hostId;
-            hostPage.Url = url;
-            hostPage.Html = html;
-            hostPage.Depth = depth;
-            hostPage.DateTime = dateTime;
-            return hostPage;
-        }
 
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                if (_Id != value)
-                {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _Id;
-        partial void OnIdChanging(global::System.Int32 value);
-        partial void OnIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 HostId
-        {
-            get
-            {
-                return _HostId;
-            }
-            set
-            {
-                OnHostIdChanging(value);
-                ReportPropertyChanging("HostId");
-                _HostId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("HostId");
-                OnHostIdChanged();
-            }
-        }
-        private global::System.Int32 _HostId;
-        partial void OnHostIdChanging(global::System.Int32 value);
-        partial void OnHostIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Url
-        {
-            get
-            {
-                return _Url;
-            }
-            set
-            {
-                OnUrlChanging(value);
-                ReportPropertyChanging("Url");
-                _Url = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Url");
-                OnUrlChanged();
-            }
-        }
-        private global::System.String _Url;
-        partial void OnUrlChanging(global::System.String value);
-        partial void OnUrlChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Html
-        {
-            get
-            {
-                return _Html;
-            }
-            set
-            {
-                OnHtmlChanging(value);
-                ReportPropertyChanging("Html");
-                _Html = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Html");
-                OnHtmlChanged();
-            }
-        }
-        private global::System.String _Html;
-        partial void OnHtmlChanging(global::System.String value);
-        partial void OnHtmlChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 Depth
-        {
-            get
-            {
-                return _Depth;
-            }
-            set
-            {
-                OnDepthChanging(value);
-                ReportPropertyChanging("Depth");
-                _Depth = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Depth");
-                OnDepthChanged();
-            }
-        }
-        private global::System.Int32 _Depth;
-        partial void OnDepthChanging(global::System.Int32 value);
-        partial void OnDepthChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime DateTime
-        {
-            get
-            {
-                return _DateTime;
-            }
-            set
-            {
-                OnDateTimeChanging(value);
-                ReportPropertyChanging("DateTime");
-                _DateTime = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DateTime");
-                OnDateTimeChanged();
-            }
-        }
-        private global::System.DateTime _DateTime;
-        partial void OnDateTimeChanging(global::System.DateTime value);
-        partial void OnDateTimeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> RefererId
-        {
-            get
-            {
-                return _RefererId;
-            }
-            set
-            {
-                OnRefererIdChanging(value);
-                ReportPropertyChanging("RefererId");
-                _RefererId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("RefererId");
-                OnRefererIdChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _RefererId;
-        partial void OnRefererIdChanging(Nullable<global::System.Int32> value);
-        partial void OnRefererIdChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FK_Form_HostPage", "Form")]
-        public EntityCollection<Form> Forms
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Form>("xKnightModel.FK_Form_HostPage", "Form");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Form>("xKnightModel.FK_Form_HostPage", "Form", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FK_HostPage_Host", "Host")]
-        public Host Host
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Host>("xKnightModel.FK_HostPage_Host", "Host").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Host>("xKnightModel.FK_HostPage_Host", "Host").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Host> HostReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Host>("xKnightModel.FK_HostPage_Host", "Host");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Host>("xKnightModel.FK_HostPage_Host", "Host", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FK_HostPage_HostPage", "HostPage1")]
-        public EntityCollection<HostPage> HostPage1
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<HostPage>("xKnightModel.FK_HostPage_HostPage", "HostPage1");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<HostPage>("xKnightModel.FK_HostPage_HostPage", "HostPage1", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FK_HostPage_HostPage", "HostPage")]
-        public HostPage HostPage2
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<HostPage>("xKnightModel.FK_HostPage_HostPage", "HostPage").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<HostPage>("xKnightModel.FK_HostPage_HostPage", "HostPage").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<HostPage> HostPage2Reference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<HostPage>("xKnightModel.FK_HostPage_HostPage", "HostPage");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<HostPage>("xKnightModel.FK_HostPage_HostPage", "HostPage", value);
-                }
-            }
-        }
-
-        #endregion
     }
     
     /// <summary>
@@ -1649,6 +1521,7 @@ namespace xKnight.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1775,7 +1648,319 @@ namespace xKnight.Models
         partial void OndefinitionChanged();
 
         #endregion
+
     
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="xKnightModel", Name="Webpage")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Webpage : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Webpage object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="hostId">Initial value of the HostId property.</param>
+        /// <param name="url">Initial value of the Url property.</param>
+        /// <param name="depth">Initial value of the Depth property.</param>
+        /// <param name="dateTime">Initial value of the DateTime property.</param>
+        public static Webpage CreateWebpage(global::System.Int32 id, global::System.Int32 hostId, global::System.String url, global::System.Int32 depth, global::System.DateTime dateTime)
+        {
+            Webpage webpage = new Webpage();
+            webpage.Id = id;
+            webpage.HostId = hostId;
+            webpage.Url = url;
+            webpage.Depth = depth;
+            webpage.DateTime = dateTime;
+            return webpage;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 HostId
+        {
+            get
+            {
+                return _HostId;
+            }
+            set
+            {
+                OnHostIdChanging(value);
+                ReportPropertyChanging("HostId");
+                _HostId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HostId");
+                OnHostIdChanged();
+            }
+        }
+        private global::System.Int32 _HostId;
+        partial void OnHostIdChanging(global::System.Int32 value);
+        partial void OnHostIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Url
+        {
+            get
+            {
+                return _Url;
+            }
+            set
+            {
+                OnUrlChanging(value);
+                ReportPropertyChanging("Url");
+                _Url = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Url");
+                OnUrlChanged();
+            }
+        }
+        private global::System.String _Url;
+        partial void OnUrlChanging(global::System.String value);
+        partial void OnUrlChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Html
+        {
+            get
+            {
+                return _Html;
+            }
+            set
+            {
+                OnHtmlChanging(value);
+                ReportPropertyChanging("Html");
+                _Html = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Html");
+                OnHtmlChanged();
+            }
+        }
+        private global::System.String _Html;
+        partial void OnHtmlChanging(global::System.String value);
+        partial void OnHtmlChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Depth
+        {
+            get
+            {
+                return _Depth;
+            }
+            set
+            {
+                OnDepthChanging(value);
+                ReportPropertyChanging("Depth");
+                _Depth = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Depth");
+                OnDepthChanged();
+            }
+        }
+        private global::System.Int32 _Depth;
+        partial void OnDepthChanging(global::System.Int32 value);
+        partial void OnDepthChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DateTime
+        {
+            get
+            {
+                return _DateTime;
+            }
+            set
+            {
+                OnDateTimeChanging(value);
+                ReportPropertyChanging("DateTime");
+                _DateTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateTime");
+                OnDateTimeChanged();
+            }
+        }
+        private global::System.DateTime _DateTime;
+        partial void OnDateTimeChanging(global::System.DateTime value);
+        partial void OnDateTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> RefererId
+        {
+            get
+            {
+                return _RefererId;
+            }
+            set
+            {
+                OnRefererIdChanging(value);
+                ReportPropertyChanging("RefererId");
+                _RefererId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RefererId");
+                OnRefererIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _RefererId;
+        partial void OnRefererIdChanging(Nullable<global::System.Int32> value);
+        partial void OnRefererIdChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FK_Form_HostPage", "Form")]
+        public EntityCollection<Form> Forms
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Form>("xKnightModel.FK_Form_HostPage", "Form");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Form>("xKnightModel.FK_Form_HostPage", "Form", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FK_HostPage_Host", "Host")]
+        public Host Host
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Host>("xKnightModel.FK_HostPage_Host", "Host").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Host>("xKnightModel.FK_HostPage_Host", "Host").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Host> HostReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Host>("xKnightModel.FK_HostPage_Host", "Host");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Host>("xKnightModel.FK_HostPage_Host", "Host", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "FK_HostPage_HostPage", "HostPage")]
+        public Webpage Referer
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Webpage>("xKnightModel.FK_HostPage_HostPage", "HostPage").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Webpage>("xKnightModel.FK_HostPage_HostPage", "HostPage").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Webpage> RefererReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Webpage>("xKnightModel.FK_HostPage_HostPage", "HostPage");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Webpage>("xKnightModel.FK_HostPage_HostPage", "HostPage", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -1796,8 +1981,7 @@ namespace xKnight.Models
         /// <param name="formId">Initial value of the FormId property.</param>
         /// <param name="attackContent">Initial value of the AttackContent property.</param>
         /// <param name="responsePage">Initial value of the ResponsePage property.</param>
-        /// <param name="xAttackType">Initial value of the xAttackType property.</param>
-        public static XAttack CreateXAttack(global::System.Int32 id, global::System.Int32 attackId, global::System.Int32 formId, global::System.String attackContent, global::System.String responsePage, global::System.Int32 xAttackType)
+        public static XAttack CreateXAttack(global::System.Int32 id, global::System.Int32 attackId, global::System.Int32 formId, global::System.String attackContent, global::System.String responsePage)
         {
             XAttack xAttack = new XAttack();
             xAttack.Id = id;
@@ -1805,11 +1989,11 @@ namespace xKnight.Models
             xAttack.FormId = formId;
             xAttack.AttackContent = attackContent;
             xAttack.ResponsePage = responsePage;
-            xAttack.xAttackType = xAttackType;
             return xAttack;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1938,28 +2122,53 @@ namespace xKnight.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 xAttackType
+        public Nullable<global::System.DateTime> StartTime
         {
             get
             {
-                return _xAttackType;
+                return _StartTime;
             }
             set
             {
-                OnxAttackTypeChanging(value);
-                ReportPropertyChanging("xAttackType");
-                _xAttackType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("xAttackType");
-                OnxAttackTypeChanged();
+                OnStartTimeChanging(value);
+                ReportPropertyChanging("StartTime");
+                _StartTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("StartTime");
+                OnStartTimeChanged();
             }
         }
-        private global::System.Int32 _xAttackType;
-        partial void OnxAttackTypeChanging(global::System.Int32 value);
-        partial void OnxAttackTypeChanged();
+        private Nullable<global::System.DateTime> _StartTime;
+        partial void OnStartTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnStartTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> FinishTime
+        {
+            get
+            {
+                return _FinishTime;
+            }
+            set
+            {
+                OnFinishTimeChanging(value);
+                ReportPropertyChanging("FinishTime");
+                _FinishTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FinishTime");
+                OnFinishTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _FinishTime;
+        partial void OnFinishTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnFinishTimeChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2038,10 +2247,247 @@ namespace xKnight.Models
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "XAttackParamXAttack", "XAttackParam")]
+        public EntityCollection<XAttackParam> XAttackParams
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<XAttackParam>("xKnightModel.XAttackParamXAttack", "XAttackParam");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<XAttackParam>("xKnightModel.XAttackParamXAttack", "XAttackParam", value);
+                }
+            }
+        }
 
         #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="xKnightModel", Name="XAttackParam")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class XAttackParam : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new XAttackParam object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="formElementId">Initial value of the FormElementId property.</param>
+        /// <param name="xAttackId">Initial value of the XAttackId property.</param>
+        public static XAttackParam CreateXAttackParam(global::System.Int32 id, global::System.Int32 formElementId, global::System.Int32 xAttackId)
+        {
+            XAttackParam xAttackParam = new XAttackParam();
+            xAttackParam.Id = id;
+            xAttackParam.FormElementId = formElementId;
+            xAttackParam.XAttackId = xAttackId;
+            return xAttackParam;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Value
+        {
+            get
+            {
+                return _Value;
+            }
+            set
+            {
+                OnValueChanging(value);
+                ReportPropertyChanging("Value");
+                _Value = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Value");
+                OnValueChanged();
+            }
+        }
+        private global::System.String _Value;
+        partial void OnValueChanging(global::System.String value);
+        partial void OnValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FormElementId
+        {
+            get
+            {
+                return _FormElementId;
+            }
+            set
+            {
+                OnFormElementIdChanging(value);
+                ReportPropertyChanging("FormElementId");
+                _FormElementId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FormElementId");
+                OnFormElementIdChanged();
+            }
+        }
+        private global::System.Int32 _FormElementId;
+        partial void OnFormElementIdChanging(global::System.Int32 value);
+        partial void OnFormElementIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 XAttackId
+        {
+            get
+            {
+                return _XAttackId;
+            }
+            set
+            {
+                OnXAttackIdChanging(value);
+                ReportPropertyChanging("XAttackId");
+                _XAttackId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("XAttackId");
+                OnXAttackIdChanged();
+            }
+        }
+        private global::System.Int32 _XAttackId;
+        partial void OnXAttackIdChanging(global::System.Int32 value);
+        partial void OnXAttackIdChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "XAttackParamFormElement", "FormElement")]
+        public FormElement FormElement
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FormElement>("xKnightModel.XAttackParamFormElement", "FormElement").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FormElement>("xKnightModel.XAttackParamFormElement", "FormElement").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<FormElement> FormElementReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FormElement>("xKnightModel.XAttackParamFormElement", "FormElement");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FormElement>("xKnightModel.XAttackParamFormElement", "FormElement", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("xKnightModel", "XAttackParamXAttack", "XAttack")]
+        public XAttack XAttack
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<XAttack>("xKnightModel.XAttackParamXAttack", "XAttack").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<XAttack>("xKnightModel.XAttackParamXAttack", "XAttack").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<XAttack> XAttackReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<XAttack>("xKnightModel.XAttackParamXAttack", "XAttack");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<XAttack>("xKnightModel.XAttackParamXAttack", "XAttack", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
 
     #endregion
+
     
 }

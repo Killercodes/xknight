@@ -7,14 +7,17 @@
     <File id="53ADCBCF-B328-4040-9914-F56013299AA0/f:Program.cs" caret="0" fromTop="0" />
     <File id="515929F5-8A88-47E7-A543-F0A3FA8B0E0A/f:Program.cs" caret="0" fromTop="0" />
     <File id="6DD18B4D-243B-4A68-978E-622E1E53D968/f:Program.cs" caret="0" fromTop="0" />
-    <File id="6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF/f:Program.cs" caret="0" fromTop="0" />
     <File id="4E5C84E0-754A-4BE7-B994-0E5A85BF6B26/f:xKnightModel.edmx.sql" caret="0" fromTop="0" />
     <File id="4E5C84E0-754A-4BE7-B994-0E5A85BF6B26/f:Program.cs" caret="0" fromTop="0" />
-    <File id="6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF/f:Crawler.cs" caret="1473" fromTop="19" />
+    <File id="6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF/f:Crawler.cs" caret="2180" fromTop="23" />
+    <File id="6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF/f:Program.cs" caret="594" fromTop="22" />
+    <File id="6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF/f:CrawlAgent.cs" caret="9759" fromTop="24" />
   </RecentFiles>
   <RecentEdits>
     <File id="A109074D-939B-4428-904E-B5E593274EF2/f:MainWindow.xaml.cs" caret="0" fromTop="0" />
     <File id="4E5C84E0-754A-4BE7-B994-0E5A85BF6B26/f:Model1.edmx.sql" caret="0" fromTop="0" />
     <File id="6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF/f:Crawler.cs" caret="1473" fromTop="19" />
+    <File id="6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF/f:Program.cs" caret="594" fromTop="22" />
+    <File id="6D8CA3EE-94A1-40D8-88B4-0CF63300DAEF/f:CrawlAgent.cs" caret="9393" fromTop="11" />
   </RecentEdits>
 </RecentFiles>

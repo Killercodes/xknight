@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -89,6 +90,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.Config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -100,6 +102,10 @@
     <ProjectReference Include="..\xKnight.Models\xKnight.Models.csproj">
       <Project>{4E5C84E0-754A-4BE7-B994-0E5A85BF6B26}</Project>
       <Name>xKnight.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\xKnight.WebCrawler\xKnight.WebCrawling.csproj">
+      <Project>{6d8ca3ee-94a1-40d8-88b4-0cf63300daef}</Project>
+      <Name>xKnight.WebCrawling</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -47,7 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrawlerAgent.cs" />
+    <Compile Include="EventArgs\CrawlAnnouncedEventArgs.cs" />
+    <Compile Include="EventArgs\CrawlAnnounceItem.cs" />
+    <Compile Include="EventArgs\CrawlAnnounceStatus.cs" />
+    <Compile Include="EventArgs\CrawlCompletedEventArgs.cs" />
     <Compile Include="Crawler.cs" />
+    <Compile Include="CrawlingSharedResource.cs" />
+    <Compile Include="EventArgs\CrawlStartedEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,6 +65,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

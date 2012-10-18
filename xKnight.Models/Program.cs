@@ -9,6 +9,7 @@ namespace xKnight.Models
     {
         static void Main(string[] args)
         {
+            DataLayer.Save(new CrawlSetting());
         }
     }
 }

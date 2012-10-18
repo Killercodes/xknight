@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataLayer.cs" />
+    <Compile Include="FormElementType.cs" />
+    <Compile Include="FormMethod.cs" />
     <Compile Include="xKnightModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

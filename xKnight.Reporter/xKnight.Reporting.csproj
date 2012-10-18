@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrawlReporter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -50,6 +52,10 @@
     <ProjectReference Include="..\xKnight.Models\xKnight.Models.csproj">
       <Project>{4E5C84E0-754A-4BE7-B994-0E5A85BF6B26}</Project>
       <Name>xKnight.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\xKnight.WebCrawler\xKnight.WebCrawling.csproj">
+      <Project>{6d8ca3ee-94a1-40d8-88b4-0cf63300daef}</Project>
+      <Name>xKnight.WebCrawling</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

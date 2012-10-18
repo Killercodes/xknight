@@ -11,7 +11,8 @@
     <RootNamespace>xKnight.Attacker</RootNamespace>
     <AssemblyName>xKnight.Attacker</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -36,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,8 +46,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseAttack\AttackingSharedReource.cs" />
+    <Compile Include="BaseAttack\AttackAnnouncedEventArgs.cs" />
+    <Compile Include="BaseAttack\AttackAnnounceItem.cs" />
+    <Compile Include="BaseAttack\AttackCompletedEventArgs.cs" />
+    <Compile Include="BaseAttack\Attacker.cs" />
+    <Compile Include="BaseAttack\AttackerAgent.cs" />
+    <Compile Include="AttackManager.cs" />
+    <Compile Include="BaseAttack\AttackStartedEventArgs.cs" />
+    <Compile Include="AttackType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Xss\EncodedXssAttack\EncodedXssAttackAnnouncedEventArgs.cs" />
+    <Compile Include="Xss\EncodedXssAttack\EncodedXssAttackAnnounceItem.cs" />
+    <Compile Include="Xss\EncodedXssAttack\EncodedXssAttackerAgent.cs" />
+    <Compile Include="Xss\EncodedXssAttack\EncodedXssAttackStatus.cs" />
+    <Compile Include="Xss\EncodedXssAttack\EncodedXssAttacker.cs" />
+    <Compile Include="Xss\SimpleXssAttack\SimpleXssAttackAnnouncedEventArgs.cs" />
+    <Compile Include="Xss\SimpleXssAttack\SimpleXssAttackAnnounceItem.cs" />
+    <Compile Include="Xss\SimpleXssAttack\SimpleXssAttacker.cs" />
+    <Compile Include="Xss\SimpleXssAttack\SimpleXssAttackerAgent.cs" />
+    <Compile Include="Xss\SimpleXssAttack\SimpleXssAttackStatus.cs" />
+    <Compile Include="Xss\XssAttackingSharedReource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\xKnight.Models\xKnight.Models.csproj">
@@ -52,6 +75,10 @@
       <Name>xKnight.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
